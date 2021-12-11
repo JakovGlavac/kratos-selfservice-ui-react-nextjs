@@ -1,5 +1,11 @@
+// import { Alert, AlertContent } from '@ory/themes'
+import {
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription
+} from '@chakra-ui/react'
 import { UiText } from '@ory/kratos-client'
-import { Alert, AlertContent } from '@ory/themes'
 
 interface MessageProps {
   message: UiText
@@ -7,10 +13,10 @@ interface MessageProps {
 
 export const Message = ({ message }: MessageProps) => {
   return (
-    <Alert severity={message.type === 'error' ? 'error' : 'info'}>
-      <AlertContent data-testid={`ui/message/${message.id}`}>
+    <Alert status={message.type === 'error' ? 'error' : 'info'} my="5">
+      <AlertDescription data-testid={`ui/message/${message.id}`}>
         {message.text}
-      </AlertContent>
+      </AlertDescription>
     </Alert>
   )
 }

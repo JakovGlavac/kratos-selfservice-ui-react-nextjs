@@ -1,4 +1,13 @@
 import {
+  useColorModeValue,
+  Heading,
+  Button,
+  ButtonGroup,
+  Box,
+  Container,
+  Stack
+} from '@chakra-ui/react'
+import {
   SelfServiceLoginFlow,
   SubmitSelfServiceLoginFlowBody
 } from '@ory/kratos-client'
@@ -8,7 +17,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import {
   ActionCard,
@@ -106,8 +115,18 @@ const Login: NextPage = () => {
         <title>Sign in - Ory NextJS Integration Example</title>
         <meta name="description" content="NextJS + React + Vercel + Ory" />
       </Head>
-      <MarginCard>
-        <CardTitle>
+      {/* <MarginCard> */}
+      <Container
+        bg={useColorModeValue('gray.50', 'gray.700')}
+        maxW="sm"
+        rounded="lg"
+        centerContent
+        mt="10"
+        p="5"
+      >
+        {/* <CardTitle> */}
+        <Heading>
+          {/* Sign in */}
           {(() => {
             if (flow?.refresh) {
               return 'Confirm Action'
@@ -116,29 +135,43 @@ const Login: NextPage = () => {
             }
             return 'Sign In'
           })()}
-        </CardTitle>
+        </Heading>
         <Flow onSubmit={onSubmit} flow={flow} />
-      </MarginCard>
-      {aal || refresh ? (
-        <ActionCard>
-          <CenterLink data-testid="logout-link" onClick={onLogout}>
-            Log out
-          </CenterLink>
-        </ActionCard>
-      ) : (
-        <>
-          <ActionCard>
-            <Link href="/registration" passHref>
-              <CenterLink>Create account</CenterLink>
-            </Link>
-          </ActionCard>
-          <ActionCard>
-            <Link href="/recovery" passHref>
-              <CenterLink>Recover your account</CenterLink>
-            </Link>
-          </ActionCard>
-        </>
-      )}
+        {/* </MarginCard> */}
+      </Container>
+      <Container maxW="sm" mt="5">
+        <Stack>
+          {aal || refresh ? (
+            <Button data-testid="logout-link" onClick={onLogout}>
+              {/* <ActionCard> */}
+              {/* <CenterLink data-testid="logout-link" onClick={onLogout}> */}
+              Log out
+              {/* </CenterLink> */}
+              {/* </ActionCard> */}
+            </Button>
+          ) : (
+            <>
+              <Button onClick={() => router.push('/registration')}>
+                {/* <ActionCard> */}
+                {/* <Link href="/registration" passHref> */}
+                {/* <CenterLink> */}
+                Create account
+                {/* </CenterLink> */}
+                {/* </Link> */}
+                {/* </ActionCard> */}
+              </Button>
+              <Button onClick={() => router.push('/recovery')}>
+                {/* Forgot password? */}
+                {/* <ActionCard> */}
+                {/* <Link href="/recovery" passHref> */}
+                Recover your account
+                {/* </Link> */}
+                {/* </ActionCard> */}
+              </Button>
+            </>
+          )}
+        </Stack>
+      </Container>
     </>
   )
 }

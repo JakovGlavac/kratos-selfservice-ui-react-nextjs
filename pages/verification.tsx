@@ -1,4 +1,13 @@
 import {
+  useColorModeValue,
+  Heading,
+  Button,
+  ButtonGroup,
+  Box,
+  Container,
+  Stack
+} from '@chakra-ui/react'
+import {
   SelfServiceVerificationFlow,
   SubmitSelfServiceVerificationFlowBody
 } from '@ory/kratos-client'
@@ -100,15 +109,24 @@ const Verification: NextPage = () => {
         <title>Verify your account - Ory NextJS Integration Example</title>
         <meta name="description" content="NextJS + React + Vercel + Ory" />
       </Head>
-      <MarginCard>
-        <CardTitle>Verify your account</CardTitle>
+      {/* <MarginCard> */}
+      <Container
+        bg={useColorModeValue('gray.50', 'gray.700')}
+        maxW="sm"
+        rounded="lg"
+        centerContent
+        mt="10"
+        p="5"
+      >
+        <Heading>Verify your account</Heading>
         <Flow onSubmit={onSubmit} flow={flow} />
-      </MarginCard>
-      <ActionCard>
-        <Link href="/" passHref>
-          <CenterLink>Go back</CenterLink>
-        </Link>
-      </ActionCard>
+        {/* </MarginCard> */}
+      </Container>
+      <Container maxW="sm" mt="5">
+        <Button w="full" onClick={() => router.push('/')}>
+          Go back
+        </Button>
+      </Container>
     </>
   )
 }

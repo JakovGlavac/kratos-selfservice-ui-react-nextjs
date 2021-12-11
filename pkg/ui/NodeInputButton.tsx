@@ -1,8 +1,7 @@
-import { getNodeLabel } from '@ory/integrations/ui'
-import { UiNode, UiNodeInputAttributes } from '@ory/kratos-client'
-import { Button, Checkbox, TextInput } from '@ory/themes'
+import { getNodeLabel } from '@ory/integrations/ui';
+import { Button } from '@chakra-ui/react';
 
-import { FormDispatcher, NodeInputProps, ValueSetter } from './helpers'
+import { NodeInputProps } from './helpers';
 
 export function NodeInputButton<T>({
   node,

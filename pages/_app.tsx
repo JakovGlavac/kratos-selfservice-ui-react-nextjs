@@ -1,4 +1,6 @@
 import '../styles/globals.css'
+import { ChakraProvider } from '@chakra-ui/react'
+import { extendTheme } from '@chakra-ui/react'
 import { theme, globalStyles, ThemeProps } from '@ory/themes'
 import type { AppProps } from 'next/app'
 import { ToastContainer } from 'react-toastify'
@@ -13,10 +15,17 @@ const GlobalStyle = createGlobalStyle((props: ThemeProps) =>
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <div data-testid="app-react">
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        <Component {...pageProps} />
-        <ToastContainer />
+      <ThemeProvider
+        theme={extendTheme({
+          initialColorMode: 'dark',
+          useSystemColorMode: false
+        })}
+      >
+        <ChakraProvider>
+          <GlobalStyle />
+          <Component {...pageProps} />
+          <ToastContainer />
+        </ChakraProvider>
       </ThemeProvider>
     </div>
   )

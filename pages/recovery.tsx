@@ -1,4 +1,13 @@
 import {
+  useColorModeValue,
+  Heading,
+  Button,
+  ButtonGroup,
+  Box,
+  Container,
+  Stack
+} from '@chakra-ui/react'
+import {
   SelfServiceRecoveryFlow,
   SubmitSelfServiceRecoveryFlowBody
 } from '@ory/kratos-client'
@@ -88,15 +97,25 @@ const Recovery: NextPage = () => {
         <title>Recover your account - Ory NextJS Integration Example</title>
         <meta name="description" content="NextJS + React + Vercel + Ory" />
       </Head>
-      <MarginCard>
-        <CardTitle>Recover your account</CardTitle>
+      <Container
+        bg={useColorModeValue('gray.50', 'gray.700')}
+        maxW="sm"
+        rounded="lg"
+        centerContent
+        mt="10"
+        p="5"
+      >
+        <Heading>Recover your account</Heading>
         <Flow onSubmit={onSubmit} flow={flow} />
-      </MarginCard>
-      <ActionCard>
+      </Container>
+      {/* <ActionCard>
         <Link href="/" passHref>
           <CenterLink>Go back</CenterLink>
         </Link>
-      </ActionCard>
+      </ActionCard> */}
+      <Container maxW="sm" mt="5">
+        <Button w="full" onClick={() => router.push('/')}>Go back</Button>
+      </Container>
     </>
   )
 }

@@ -1,4 +1,13 @@
 import {
+  useColorModeValue,
+  Heading,
+  Button,
+  ButtonGroup,
+  Box,
+  Container,
+  Stack
+} from '@chakra-ui/react'
+import {
   SelfServiceSettingsFlow,
   SubmitSelfServiceSettingsFlowBody
 } from '@ory/kratos-client'
@@ -24,6 +33,7 @@ function SettingsCard({
   only,
   children
 }: Props & { children: ReactNode }) {
+  const BG_color = useColorModeValue('gray.50', 'gray.700')
   if (!flow) {
     return null
   }
@@ -36,7 +46,11 @@ function SettingsCard({
     return null
   }
 
-  return <ActionCard wide>{children}</ActionCard>
+  return (
+    <Container bg={BG_color} maxW="3xl" p="5" rounded="lg">
+      {children}
+    </Container>
+  )
 }
 
 const Settings: NextPage = () => {
@@ -108,99 +122,119 @@ const Settings: NextPage = () => {
         </title>
         <meta name="description" content="NextJS + React + Vercel + Ory" />
       </Head>
-      <CardTitle style={{ marginTop: 80 }}>
-        Profile Management and Security Settings
-      </CardTitle>
-      <SettingsCard only="profile" flow={flow}>
-        <H3>Profile Settings</H3>
-        <Messages messages={flow?.ui.messages} />
-        <Flow
-          hideGlobalMessages
-          onSubmit={onSubmit}
-          only="profile"
-          flow={flow}
-        />
-      </SettingsCard>
-      <SettingsCard only="password" flow={flow}>
-        <H3>Change Password</H3>
+      <Stack w="full" alignItems="center">
+        <Heading style={{ marginTop: 80 }}>
+          Profile Management and Security Settings
+        </Heading>
+        <SettingsCard only="profile" flow={flow}>
+          <Heading>Profile Settings</Heading>
+          <Messages messages={flow?.ui.messages} />
+          <Flow
+            hideGlobalMessages
+            onSubmit={onSubmit}
+            only="profile"
+            flow={flow}
+          />
+        </SettingsCard>
+        <SettingsCard only="password" flow={flow}>
+          <Box bg={useColorModeValue('gray.50', 'gray.700')}>
+            <Heading>Change Password</Heading>
 
-        <Messages messages={flow?.ui.messages} />
-        <Flow
-          hideGlobalMessages
-          onSubmit={onSubmit}
-          only="password"
-          flow={flow}
-        />
-      </SettingsCard>
-      <SettingsCard only="oidc" flow={flow}>
-        <H3>Manage Social Sign In</H3>
+            <Messages messages={flow?.ui.messages} />
+            <Flow
+              hideGlobalMessages
+              onSubmit={onSubmit}
+              only="password"
+              flow={flow}
+            />
+          </Box>
+        </SettingsCard>
+        <SettingsCard only="oidc" flow={flow}>
+          <H3>Manage Social Sign In</H3>
 
-        <Messages messages={flow?.ui.messages} />
-        <Flow hideGlobalMessages onSubmit={onSubmit} only="oidc" flow={flow} />
-      </SettingsCard>
-      <SettingsCard only="lookup_secret" flow={flow}>
-        <H3>Manage 2FA Backup Recovery Codes</H3>
-        <Messages messages={flow?.ui.messages} />
-        <P>
-          Recovery codes can be used in panic situations where you have lost
-          access to your 2FA device.
-        </P>
+          <Messages messages={flow?.ui.messages} />
+          <Flow
+            hideGlobalMessages
+            onSubmit={onSubmit}
+            only="oidc"
+            flow={flow}
+          />
+        </SettingsCard>
+        <SettingsCard only="lookup_secret" flow={flow}>
+          <H3>Manage 2FA Backup Recovery Codes</H3>
+          <Messages messages={flow?.ui.messages} />
+          <P>
+            Recovery codes can be used in panic situations where you have lost
+            access to your 2FA device.
+          </P>
 
-        <Flow
-          hideGlobalMessages
-          onSubmit={onSubmit}
-          only="lookup_secret"
-          flow={flow}
-        />
-      </SettingsCard>
-      <SettingsCard only="totp" flow={flow}>
-        <H3>Manage 2FA TOTP Authenticator App</H3>
-        <P>
-          Add a TOTP Authenticator App to your account to improve your account
-          security. Popular Authenticator Apps are{' '}
-          <a href="https://www.lastpass.com" rel="noreferrer" target="_blank">
-            LastPass
-          </a>{' '}
-          and Google Authenticator (
-          <a
-            href="https://apps.apple.com/us/app/google-authenticator/id388497605"
-            target="_blank"
-            rel="noreferrer"
-          >
-            iOS
-          </a>
-          ,{' '}
-          <a
-            href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en&gl=US"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Android
-          </a>
-          ).
-        </P>
-        <Messages messages={flow?.ui.messages} />
-        <Flow hideGlobalMessages onSubmit={onSubmit} only="totp" flow={flow} />
-      </SettingsCard>
-      <SettingsCard only="webauthn" flow={flow}>
-        <H3>Manage Hardware Tokens and Biometrics</H3>
-        <Messages messages={flow?.ui.messages} />
-        <P>
-          Use Hardware Tokens (e.g. YubiKey) or Biometrics (e.g. FaceID,
-          TouchID) to enhance your account security.
-        </P>
-        <Flow
-          hideGlobalMessages
-          onSubmit={onSubmit}
-          only="webauthn"
-          flow={flow}
-        />
-      </SettingsCard>
-      <ActionCard wide>
-        <Link href="/" passHref>
-          <CenterLink>Go back</CenterLink>
-        </Link>
-      </ActionCard>
+          <Flow
+            hideGlobalMessages
+            onSubmit={onSubmit}
+            only="lookup_secret"
+            flow={flow}
+          />
+        </SettingsCard>
+        <SettingsCard only="totp" flow={flow}>
+          <H3>Manage 2FA TOTP Authenticator App</H3>
+          <P>
+            Add a TOTP Authenticator App to your account to improve your account
+            security. Popular Authenticator Apps are{' '}
+            <a href="https://www.lastpass.com" rel="noreferrer" target="_blank">
+              LastPass
+            </a>{' '}
+            and Google Authenticator (
+            <a
+              href="https://apps.apple.com/us/app/google-authenticator/id388497605"
+              target="_blank"
+              rel="noreferrer"
+            >
+              iOS
+            </a>
+            ,{' '}
+            <a
+              href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en&gl=US"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Android
+            </a>
+            ).
+          </P>
+          <Messages messages={flow?.ui.messages} />
+          <Flow
+            hideGlobalMessages
+            onSubmit={onSubmit}
+            only="totp"
+            flow={flow}
+          />
+        </SettingsCard>
+        <SettingsCard only="webauthn" flow={flow}>
+          <H3>Manage Hardware Tokens and Biometrics</H3>
+          <Messages messages={flow?.ui.messages} />
+          <P>
+            Use Hardware Tokens (e.g. YubiKey) or Biometrics (e.g. FaceID,
+            TouchID) to enhance your account security.
+          </P>
+          <Flow
+            hideGlobalMessages
+            onSubmit={onSubmit}
+            only="webauthn"
+            flow={flow}
+          />
+        </SettingsCard>
+        {/* <ActionCard wide>
+          <Link href="/" passHref> */}
+        {/* <Button onClick={() => router.push('/registration')}> */}
+        <Container maxW="3xl">
+          <Button w="full" onClick={() => router.push('/')}>
+            Go back
+          </Button>
+        </Container>
+        {/* <CenterLink>Go back</CenterLink> */}
+        {/* </Link>
+        </ActionCard> */}
+      </Stack>
     </>
   )
 }

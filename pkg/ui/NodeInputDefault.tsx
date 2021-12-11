@@ -1,3 +1,11 @@
+import { Input } from '@chakra-ui/react'
+import {
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  FormHelperText,
+  Text
+} from '@chakra-ui/react'
 import { getNodeLabel } from '@ory/integrations/ui'
 import { Button, TextInput } from '@ory/themes'
 
@@ -20,32 +28,42 @@ export function NodeInputDefault<T>(props: NodeInputProps) {
       run()
     }
   }
+  console.log('attributes', attributes)
 
   // Render a generic text input field.
   return (
-    <TextInput
-      title={node.meta.label?.text}
-      onClick={onClick}
-      onChange={(e) => {
-        setValue(e.target.value)
-      }}
-      type={attributes.type}
-      name={attributes.name}
-      value={value}
-      disabled={attributes.disabled || disabled}
-      help={node.messages.length > 0}
-      state={
-        node.messages.find(({ type }) => type === 'error') ? 'error' : undefined
-      }
-      subtitle={
-        <>
-          {node.messages.map(({ text, id }, k) => (
-            <span key={`${id}-${k}`} data-testid={`ui/message/${id}`}>
-              {text}
-            </span>
-          ))}
-        </>
-      }
-    />
+    <FormControl isRequired={attributes.required}>
+      <FormLabel>{node.meta.label?.text}</FormLabel>
+
+      <Input
+        title={node.meta.label?.text}
+        onClick={onClick}
+        onChange={(e) => {
+          setValue(e.target.value)
+        }}
+        type={attributes.type}
+        name={attributes.name}
+        value={value}
+        disabled={attributes.disabled || disabled}
+        help={node.messages.length > 0}
+        state={
+          node.messages.find(({ type }) => type === 'error')
+            ? 'error'
+            : undefined
+        }
+        // isInvalid={}
+        subtitle={
+          <>
+            {node.messages.map(({ text, id }, k) => (
+              <Text key={`${id}-${k}`} data-testid={`ui/message/${id}`}>
+                {text}
+              </Text>
+            ))}
+          </>
+        }
+      />
+      {/* <Input type="email" /> */}
+      {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
+    </FormControl>
   )
 }

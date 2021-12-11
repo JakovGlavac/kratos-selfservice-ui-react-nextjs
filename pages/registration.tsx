@@ -1,3 +1,4 @@
+import { Button, Container, Heading, useColorModeValue } from '@chakra-ui/react'
 import {
   SelfServiceRegistrationFlow,
   SubmitSelfServiceRegistrationFlowBody
@@ -7,7 +8,7 @@ import { AxiosError } from 'axios'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter, NextRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 // Import render helpers
 import { Flow, ActionCard, CenterLink, MarginCard } from '../pkg'
@@ -92,15 +93,26 @@ const Registration: NextPage = () => {
         <title>Create account - Ory NextJS Integration Example</title>
         <meta name="description" content="NextJS + React + Vercel + Ory" />
       </Head>
-      <MarginCard>
-        <CardTitle>Create account</CardTitle>
+      <Container
+        bg={useColorModeValue('gray.50', 'gray.700')}
+        maxW="sm"
+        rounded="lg"
+        centerContent
+        mt="10"
+        p="5"
+      >
+        <Heading>Create account</Heading>
         <Flow onSubmit={onSubmit} flow={flow} />
-      </MarginCard>
-      <ActionCard>
-        <CenterLink data-testid="cta-link" href="/login">
+      </Container>
+      {/* <ActionCard> */}
+      {/* <CenterLink data-testid="cta-link" href="/login"> */}
+      <Container maxW="sm" mt="5">
+        <Button w="full" onClick={() => router.push('/login')}>
           Sign in
-        </CenterLink>
-      </ActionCard>
+        </Button>
+      </Container>
+      {/* </CenterLink>
+      </ActionCard> */}
     </>
   )
 }

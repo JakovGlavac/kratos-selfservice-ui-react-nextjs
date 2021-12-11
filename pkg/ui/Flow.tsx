@@ -1,3 +1,10 @@
+import {
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  Stack,
+  FormHelperText
+} from '@chakra-ui/react'
 import { getNodeId } from '@ory/integrations/ui'
 import { isUiNodeInputAttributes } from '@ory/integrations/ui'
 import {
@@ -158,39 +165,45 @@ export class Flow<T extends Values> extends Component<Props<T>, State<T>> {
     }
 
     return (
-      <form
+      <FormControl
         action={flow.ui.action}
         method={flow.ui.method}
         onSubmit={this.handleSubmit}
       >
-        {!hideGlobalMessages ? <Messages messages={flow.ui.messages} /> : null}
-        {nodes.map((node, k) => {
-          const id = getNodeId(node) as keyof Values
-          return (
-            <Node
-              key={`${id}-${k}`}
-              disabled={isLoading}
-              node={node}
-              value={values[id]}
-              dispatchSubmit={this.handleSubmit}
-              setValue={(value) =>
-                new Promise((resolve) => {
-                  this.setState(
-                    (state) => ({
-                      ...state,
-                      values: {
-                        ...state.values,
-                        [getNodeId(node)]: value
-                      }
-                    }),
-                    resolve
-                  )
-                })
-              }
-            />
-          )
-        })}
-      </form>
+        <Stack spacing="4">
+          {/* <FormControl> */}
+          {!hideGlobalMessages ? (
+            <Messages messages={flow.ui.messages} />
+          ) : null}
+          {nodes.map((node, k) => {
+            const id = getNodeId(node) as keyof Values
+            return (
+              <Node
+                key={`${id}-${k}`}
+                disabled={isLoading}
+                node={node}
+                value={values[id]}
+                dispatchSubmit={this.handleSubmit}
+                setValue={(value) =>
+                  new Promise((resolve) => {
+                    this.setState(
+                      (state) => ({
+                        ...state,
+                        values: {
+                          ...state.values,
+                          [getNodeId(node)]: value
+                        }
+                      }),
+                      resolve
+                    )
+                  })
+                }
+              />
+            )
+          })}
+        </Stack>
+        {/* </FormControl> */}
+      </FormControl>
     )
   }
 }
